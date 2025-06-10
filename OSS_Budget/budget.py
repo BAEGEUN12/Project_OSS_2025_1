@@ -24,4 +24,16 @@ class Budget:
         total = sum(e.amount for e in self.expenses)
         print(f"총 지출: {total}원\n")
 
+    def set_brightness(self):
+        while True:
+            try:
+                level = int(input("밝기를 1(가장 어둡게)부터 5(가장 밝게)까지 입력하세요: "))
+                if 1 <= level <= 5:
+                    print(f"밝기를 {level}로 설정합니다.")
+                    break
+                else:
+                    print("1부터 5 사이의 숫자를 입력해주세요.")
+            except ValueError:
+                print("숫자만 입력해주세요.")
+
 
