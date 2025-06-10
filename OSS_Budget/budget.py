@@ -34,6 +34,7 @@ class Budget:
                 else:
                     print("1부터 5 사이의 숫자를 입력해주세요.")
             except ValueError:
-                print("숫자만 입력해주세요.")
+                print("문자말고 숫자만 입력해주세요.") 
+
 
 
