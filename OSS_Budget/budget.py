@@ -27,7 +27,7 @@ class Budget:
     def set_brightness(self):
         while True:
             try:
-                level = int(input("밝기를 1(가장 어둡게)부터 5(가장 밝게)까지 입력하세요: "))
+                level = int(input("밝기를 1(가장 어둡게)부터 5(가장 밝게)까지 입력하세요:숫자만 가능 "))
                 if 1 <= level <= 5:
                     print(f"밝기를 {level}로 설정합니다.")
                     break
