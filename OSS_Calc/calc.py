@@ -5,11 +5,13 @@ class Calculator:
     def __init__(self, root):
         self.root = root
         self.root.title("계산기")
-        self.root.geometry("300x450")  # 비밀번호 입력창 때문에 약간 높임
+        self.root.geometry("300x450")
 
-        self.password = "12"  # 2자리 비밀번호
+        self.password = "12"
         self.expression = ""
-        self.is_unlocked = False  # 비밀번호 확인 상태
+        self.is_unlocked = False
+
+        self.inactivity_timer = None  # 타이머 ID 저장
 
         # 비밀번호 입력창
         self.pw_label = tk.Label(root, text="비밀번호를 입력하세요 (2자리)", font=("Arial", 14))
@@ -46,7 +48,14 @@ class Calculator:
                 )
                 btn.pack(side="left", expand=True, fill="both")
 
+        self.reset_timer()  # 초기 타이머 시작
+
+        # 모든 키 입력 이벤트에 대해 타이머 리셋
+        self.root.bind_all("<Any-KeyPress>", self.reset_timer_event)
+        self.root.bind_all("<Button>", self.reset_timer_event)
+
     def check_password(self):
+        self.reset_timer()
         entered_pw = self.pw_entry.get()
         if entered_pw == self.password:
             self.is_unlocked = True
@@ -58,6 +67,7 @@ class Calculator:
             self.pw_entry.delete(0, tk.END)
 
     def on_click(self, char):
+        self.reset_timer()
         if not self.is_unlocked:
             self.entry.delete(0, tk.END)
             self.entry.insert(tk.END, "비밀번호 확인 필요")
@@ -76,5 +86,15 @@ class Calculator:
         self.entry.delete(0, tk.END)
         self.entry.insert(tk.END, self.expression)
 
+    def reset_timer_event(self, event=None):
+        self.reset_timer()
+
+    def reset_timer(self):
+        if self.inactivity_timer is not None:
+            self.root.after_cancel(self.inactivity_timer)
+        self.inactivity_timer = self.root.after(60000, self.auto_shutdown)
+
+    def auto_shutdown(self):
+        self.root.destroy()  # 1분 후 자동 종료
 
 
